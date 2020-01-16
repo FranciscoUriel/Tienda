@@ -1,0 +1,36 @@
+﻿@page
+@model Tienda.Pages.Productos.DetallesModel
+@{
+}
+<h1>Detalles</h1>
+<div>
+    <dl>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.productos.NomProducto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.productos.NomProducto)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.productos.Precio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.productos.Precio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.productos.Detalle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.productos.Detalle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.productos.Categoria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.productos.Categoria.NomCategoria)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Index">Volver <i class="fas fa-backspace"></i></a>
+</div>

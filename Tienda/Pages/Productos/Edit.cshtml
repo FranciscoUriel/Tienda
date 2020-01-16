@@ -1,0 +1,50 @@
+﻿@page
+@model Tienda.Pages.Productos.EditModel
+@{
+}
+<h1>Editar</h1>
+<hr />
+<div class="row" >
+   <div class="col-md-4">
+       <form method="post">
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <input type="hidden" asp-for="productos.IdProducto" />
+           <div class="form-group">
+               <label asp-for="productos.NomProducto" class="control-label"></label>
+               <input asp-for="productos.NomProducto" class="form-control" />
+               <span asp-validation-for="productos.NomProducto" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="productos.Precio" class="control-label"></label>
+               <input asp-for="productos.Precio" class="form-control" />
+               <span asp-validation-for="productos.Precio" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="productos.Cantidad" class="control-label"></label>
+               <input asp-for="productos.Cantidad" class="form-control" />
+               <span asp-validation-for="productos.Cantidad" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="productos.Detalle" class="control-label"></label>
+               <input asp-for="productos.Detalle" class="form-control" />
+               <span asp-validation-for="productos.Detalle" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="productos.Categoria.NomCategoria" class="control-label"></label>
+               <select asp-for="productos.Categoria.NomCategoria" class="form-control">
+                   @foreach (var item in Model.categoria)
+                   {
+                       <option value="@item.NomCategoria">@Html.DisplayFor(modelItem => item.NomCategoria)</option>
+                   }
+               </select>
+           </div>
+           <div class="form-group">
+               <input type="submit" value="Save" class="btn btn-primary" />
+           </div>
+       </form>
+
+   </div>
+</div>
+<div>
+    <a asp-page="./Index">Volver <i class="fas fa-backspace"></i></a>
+</div>

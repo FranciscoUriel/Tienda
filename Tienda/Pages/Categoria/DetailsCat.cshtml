@@ -1,0 +1,32 @@
+﻿@page
+@model Tienda.DetailsCatModel
+
+@{
+  
+   
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Categoria</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Categoria.NomCategoria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categoria.NomCategoria)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Categoria.Detalle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categoria.Detalle)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./EditCat" asp-route-id="@Model.Categoria.NomCategoria">Edit</a> |
+    <a asp-page="./IndexCategoria">Back to List</a>
+</div>

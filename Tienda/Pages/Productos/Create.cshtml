@@ -1,0 +1,56 @@
+﻿@page
+@model Tienda.Pages.Productos.CreateModel
+@{
+}
+<h1>Añadir</h1>
+<h2>Producto</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="productos.NomProducto" class="control-label"></label>
+                <input asp-for="productos.NomProducto" class="form-control" />
+                <span asp-validation-for="productos.NomProducto" class="text-danger"></span>
+            </div> <div class="form-group">
+                <label asp-for="productos.Precio" class="control-label"></label>
+                <input asp-for="productos.Precio" class="form-control" />
+                <span asp-validation-for="productos.Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productos.Cantidad" class="control-label"></label>
+                <input asp-for="productos.Cantidad" class="form-control" />
+                <span asp-validation-for="productos.Cantidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productos.Categoria" class="control-label"></label>
+                <select asp-for="productos.Categoria" class="form-control">
+                    @foreach (var item in Model.categorias)
+                    {
+                        <option value="@item.NomCategoria">@Html.DisplayFor(modelItem => item.NomCategoria)</option>
+                    }
+                </select>
+
+                <span asp-validation-for="productos.Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productos.Detalle" class="control-label"></label>
+                <input asp-for="productos.Detalle" class="form-control" />
+                <span asp-validation-for="productos.Detalle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-page="./Index">Regresar<i class="fas fa-backspace"></i></a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

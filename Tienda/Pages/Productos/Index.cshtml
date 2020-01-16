@@ -1,0 +1,57 @@
+﻿@page
+@model Tienda.Pages.Productos.IndexModel
+@{
+}
+<h1>Productos regristrados</h1>
+<p>
+    <a asp-page="./Create">Agregar producto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].NomProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Categoria)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.productos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.NomCategoria)
+                   
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.IdProducto" class="btn btn-light btn-sm"><i class="fas fa-edit"></i></a> |
+                    <a class="btn btn-primary" asp-page="./Detalles" asp-route-id="@item.IdProducto"><i class="fas fa-info-circle"></i></a> |
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,123 @@
+﻿@page
+
+@model Tienda.IndexCatModel
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="./CreateCat">Agregar categoria <i class="far fa-plus-square"></i></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria[0].NomCategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria[0].Detalle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Categoria)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomCategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td>
+                    <a asp-page="./EditCat" asp-route-id="@item.NomCategoria" class="btn btn-light btn-sm"><i class="fas fa-edit"></i></a> |
+                    <a class="btn btn-primary" asp-page="./DetailsCat" asp-route-id="@item.NomCategoria"><i class="fas fa-info-circle"></i></a> |
+                    <a asp-page="./DeleteCat" asp-route-id="@item.NomCategoria" class="btn btn-primary btnDelete"> <i class="fas fa-times"></i></a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*<asp:TextBox ID="btnNumeroAleatorio" runat="server" AutoPostBack="false">Buscar número aleatorio</asp:TextBox>*@
+
+<button type="button" onclick="LLamarBorrado()" class="btn-primary">Prueba</button>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        // jQuery!
+        $(function () {
+
+            // Aqui se ejecuta al cargar la pagina
+            //$(".btnDelete").on("click", function (ev) {
+            //    ev.preventDefault();
+            //    Swal.fire({
+            //        title: 'Error!',
+            //        text: 'Do you want to continue',
+            //        icon: 'error',
+            //        confirmButtonText: 'Cool'
+            //    });
+            //});
+            $(".btnDelete").on("click", function (ev) {
+                ev.preventDefault();
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                      
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Se a borrado la categoria exitosamente',
+                            showConfirmButton: false,
+                     
+
+        
+                        })
+                    
+
+                        window.setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelado',
+                            'NO se borro la categoria',
+                            'error'
+                        )
+                    }
+                });
+            });
+        });
+        function LLamarBorrado() {
+            var request = new XMLHttpRequest();
+            request.open("OnPostAsync", "/DeleteCat");
+        }
+          
+    </script>
+
+}
