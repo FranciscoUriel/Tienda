@@ -10,4 +10,51 @@
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:500px;max-width:500px;"/>
     
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].NomProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Precio)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.productos[0].Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productos[0].Categoria)
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.productos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.NomCategoria)
+
+                </td>*@
+                <td>
+                  <a class="btn btn-light"><i class="far fa-plus-square"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 

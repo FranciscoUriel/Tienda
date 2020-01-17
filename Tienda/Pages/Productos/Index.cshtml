@@ -49,9 +49,62 @@
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.IdProducto" class="btn btn-light btn-sm"><i class="fas fa-edit"></i></a> |
                     <a class="btn btn-primary" asp-page="./Detalles" asp-route-id="@item.IdProducto"><i class="fas fa-info-circle"></i></a> |
-
+                    <a href="~/api/Productos/@item.IdProducto" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@section Scripts { 
+    <script type="text/javascript">
+        $(function () {
+            $(".btnDelete").on("click", function (ev) {
+                var Url = $(this).attr("href");
+
+                ev.preventDefault();
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Estas seguro?',
+                    text: 'No seras capas de recuperar esta informacion',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si, borraro',
+                    cancelButtonText: 'No, cancela',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: Url,
+                            type: "DELETE",
+                            success: function (result) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se a borrado la categoria exitosamente',
+                                    showConfirmButton: false,
+                                });
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelado',
+                            'NO se borro el producto',
+                            'error'
+                        )
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -37,7 +37,7 @@
                 <td>
                     <a asp-page="./EditCat" asp-route-id="@item.NomCategoria" class="btn btn-light btn-sm"><i class="fas fa-edit"></i></a> |
                     <a class="btn btn-primary" asp-page="./DetailsCat" asp-route-id="@item.NomCategoria"><i class="fas fa-info-circle"></i></a> |
-                    <a href="api/Categoria/@item.NomCategoria" class="btn btn-primary btnDelete"> <i class="fas fa-times"></i></a>
+                    <a href="~/api/Categoria/@item.NomCategoria" class="btn btn-primary btnDelete"> <i class="fas fa-times"></i></a>
 
                 </td>
             </tr>
@@ -89,8 +89,9 @@
                                     title: 'Se a borrado la categoria exitosamente',
                                     showConfirmButton: false,
                                 });
-
-                                location.reload();
+                                window.setTimeout(function () {
+                                    location.reload();
+                                    }, 3000);
                             }
                         });
 
