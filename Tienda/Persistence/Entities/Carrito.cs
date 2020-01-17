@@ -13,7 +13,7 @@ namespace Tienda.Persistence.Entities
         [Required]
         public DateTime Fecha { get; set; }
         [Required]
-        public Sale Sale { get; set; }
+        public ICollection<Sale> sale { get; set; }
 
 
         public ICollection<Prod_Car> ProdCar { get; set; }

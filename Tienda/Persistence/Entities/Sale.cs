@@ -13,8 +13,8 @@ namespace Tienda.Persistence.Entities
         public int IdSale { get; set; }
         [Required]
         public DateTime Fecha { get; set; }
-
-
-        public ICollection<Carrito> Carrito { get; set; }
+        public decimal Total { get; set; }
+        public Carrito carrito { get; set; }
+       
     }
 }

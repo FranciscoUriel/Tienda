@@ -14,6 +14,6 @@ namespace Tienda.Persistence.Entities
 
         
         public Carrito Carrito { get; set; }
-        public decimal Total { get; set; }
+       
     }
 }
