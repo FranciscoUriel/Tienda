@@ -37,7 +37,7 @@
                 <td>
                     <a asp-page="./EditCat" asp-route-id="@item.NomCategoria" class="btn btn-light btn-sm"><i class="fas fa-edit"></i></a> |
                     <a class="btn btn-primary" asp-page="./DetailsCat" asp-route-id="@item.NomCategoria"><i class="fas fa-info-circle"></i></a> |
-                    <a asp-page="./DeleteCat" asp-route-id="@item.NomCategoria" class="btn btn-primary btnDelete"> <i class="fas fa-times"></i></a>
+                    <a href="api/Categoria/@item.NomCategoria" class="btn btn-primary btnDelete"> <i class="fas fa-times"></i></a>
 
                 </td>
             </tr>
@@ -55,18 +55,11 @@
         // jQuery!
         $(function () {
 
-            // Aqui se ejecuta al cargar la pagina
-            //$(".btnDelete").on("click", function (ev) {
-            //    ev.preventDefault();
-            //    Swal.fire({
-            //        title: 'Error!',
-            //        text: 'Do you want to continue',
-            //        icon: 'error',
-            //        confirmButtonText: 'Cool'
-            //    });
-            //});
             $(".btnDelete").on("click", function (ev) {
+                var url = $(this).attr("href");
+
                 ev.preventDefault();
+
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
                         confirmButton: 'btn btn-success',
@@ -85,16 +78,22 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
-                      
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Se a borrado la categoria exitosamente',
-                            showConfirmButton: false,
-                        })             
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 3000);
+                      // TODO: Eliminar Categoría 
+                        $.ajax({
+                            url: url,
+                            type: "DELETE",
+                            success: function (result) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se a borrado la categoria exitosamente',
+                                    showConfirmButton: false,
+                                });
+
+                                location.reload();
+                            }
+                        });
+
                     } else if (
                         /* Read more about handling dismissals below */
                         result.dismiss === Swal.DismissReason.cancel
@@ -108,20 +107,6 @@
                 });
             });
         });
-        function LLamarBorrado() {
-            $.ajax({
-                url: "./DeleteCat",
-                type: 'Post',
-                data: { id: "Salado" },
-
-            });
-        }
-        function Llamar() {
-            
-            peticion01 = new XMLHttpRequest();
-            peticion01.open("GET", "./DeleteCat", true);
-            //peticion01.send("id=Salado");
-        }
     </script>
 
 }
