@@ -46,7 +46,7 @@
 </table>
 @*<asp:TextBox ID="btnNumeroAleatorio" runat="server" AutoPostBack="false">Buscar número aleatorio</asp:TextBox>*@
 
-<button type="button" onclick="LLamarBorrado()" class="btn-primary">Prueba</button>
+<button type="button" onclick="Llamar()" class="btn-primary">Prueba</button>
 
 @section Scripts {
 
@@ -91,12 +91,7 @@
                             icon: 'success',
                             title: 'Se a borrado la categoria exitosamente',
                             showConfirmButton: false,
-                     
-
-        
-                        })
-                    
-
+                        })             
                         window.setTimeout(function () {
                             location.reload();
                         }, 3000);
@@ -114,10 +109,19 @@
             });
         });
         function LLamarBorrado() {
-            var request = new XMLHttpRequest();
-            request.open("OnPostAsync", "/DeleteCat");
+            $.ajax({
+                url: "./DeleteCat",
+                type: 'Post',
+                data: { id: "Salado" },
+
+            });
         }
-          
+        function Llamar() {
+            
+            peticion01 = new XMLHttpRequest();
+            peticion01.open("GET", "./DeleteCat", true);
+            //peticion01.send("id=Salado");
+        }
     </script>
 
 }
