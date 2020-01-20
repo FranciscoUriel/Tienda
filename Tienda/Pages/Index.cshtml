@@ -13,60 +13,19 @@
 <div>
     <i></i>
 </div>
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.productos[0].NomProducto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.productos[0].Precio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.productos[0].Cantidad)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.productos[0].Detalle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.productos[0].Categoria)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.productos)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NomProducto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Detalle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Categoria.NomCategoria)
 
-                    </td>
-                    <td>
-                      <a class="btn btn-light"><i class="far fa-plus-square"></i></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
 <div class="card-columns">
     @foreach (var product in Model.productos)
     {
-        <div class="card col-sm">
+        <div class="card col-sm" id="@product.IdProducto">
             <img src="@product.Img" class="product" />
             <div class="card-body">
                 <h5 class="card-title"> @product.NomProducto </h5>
+                <div class="info hidden" id="@product.IdProducto">
+                <p>Detalles: @product.Detalle 
+                <br>Precio: @product.Precio
+                </p>
+                </div>
             </div>
 
             <div class="card-footer">
@@ -74,6 +33,14 @@
             </div>
         </div>
     }
+</div>
+<div>
+    <div class="hidden" id="prueba"> 
+        <p>
+            prueba
+        </p>
+    </div>
+    <p class=" btn-light boton" >Mostrar</p>
 </div>
 @section Scripts { 
     <script type="text/javascript">
@@ -96,6 +63,18 @@
                                 }, 3000);
                             }
                         });
+            });
+        });
+
+        //Experimento de la utilidad visibiliti
+        $(function () {
+            $(".card").mouseover(function (ev) {
+                var id = $(this).attr("id");
+                $('#'+id+'.info').removeClass('hidden');
+            });
+            $(".card").mouseout(function (ev) {
+                  var id = $(this).attr("id");
+                $('#'+id+'.info').addClass('hidden');
             });
         });
     </script>

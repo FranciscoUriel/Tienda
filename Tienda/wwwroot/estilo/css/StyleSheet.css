@@ -107,8 +107,15 @@ body {
 
 .card-footer {
     background: white;
+    
 }
 .card{
     height: 370px;
     width: 205px;
+}
+.hidden {
+    visibility:hidden;
+}
+.visible{
+    visibility:visible;
 }
