@@ -37,5 +37,21 @@ namespace Tienda.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var prodCar = await _context.ProdCar.FindAsync(id);
+            if(prodCar == null)
+            {
+                return NotFound();
+            }
+             _context.Remove(prodCar);
+
+            await _context.SaveChangesAsync();
+            
+            return Ok();
+        }
     }
 }

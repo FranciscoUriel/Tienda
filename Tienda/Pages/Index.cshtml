@@ -10,9 +10,7 @@
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:450px;max-width:450px;" />
 
 </div>
-<div>
-    <i></i>
-</div>
+
 
 <div class="card-columns">
     @foreach (var product in Model.productos)
@@ -29,19 +27,12 @@
             </div>
 
             <div class="card-footer">
-                <a class="btn btn-light btnAgregar" href="~/api/Carrito/@product.IdProducto/1">Agregar al carrito <i class="far fa-plus-square"></i></a>
+                <a class="btn btn-light btnAgregar" href="~/api/Carrito/@product.IdProducto/@Model.Car.Last().IdCar">Agregar al carrito <i class="far fa-plus-square"></i></a>
             </div>
         </div>
     }
 </div>
-<div>
-    <div class="hidden" id="prueba"> 
-        <p>
-            prueba
-        </p>
-    </div>
-    <p class=" btn-light boton" >Mostrar</p>
-</div>
+
 @section Scripts { 
     <script type="text/javascript">
         $(function () {
