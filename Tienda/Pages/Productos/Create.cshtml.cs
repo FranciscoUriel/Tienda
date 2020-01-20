@@ -39,6 +39,7 @@ namespace Tienda.Pages.Productos
             producto.Precio = productos.Precio;
             producto.Detalle = productos.Detalle;
             producto.Cantidad = productos.Cantidad;
+            producto.Img = productos.Img;
             producto.Categoria = await _context.Categroria.FirstOrDefaultAsync(m => m.NomCategoria == productos.Categoria);
             categorias = await _context.Categroria.ToListAsync();
             if (!ModelState.IsValid)

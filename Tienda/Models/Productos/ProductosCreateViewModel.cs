@@ -23,6 +23,8 @@ namespace Tienda.Models.Productos
         [Display(Name = "Categoria")]
         [Required]
         public string Categoria { get; set; }
-
+        [Display(Name = "Direccion de la imagen")]
+        [Required]
+        public string Img { get; set; }
     }
 }

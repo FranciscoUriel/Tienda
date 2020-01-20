@@ -1,60 +1,102 @@
 ﻿@page
 @model Tienda.IndexModel
 @{
-   
-    
+
+
 }
 
 <div>
     <h1 class="display-4">Bienvenido a Tiendita experimental HD</h1>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:500px;max-width:500px;"/>
-    
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:450px;max-width:450px;" />
+
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.productos[0].NomProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.productos[0].Precio)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.productos[0].Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.productos[0].Detalle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.productos[0].Categoria)
-            </th>*@
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.productos)
-        {
+<div>
+    <i></i>
+</div>
+@*<table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Cantidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Detalle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Categoria.NomCategoria)
-
-                </td>*@
-                <td>
-                  <a class="btn btn-light"><i class="far fa-plus-square"></i></a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.productos[0].NomProducto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.productos[0].Precio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.productos[0].Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.productos[0].Detalle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.productos[0].Categoria)
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.productos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomProducto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detalle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria.NomCategoria)
 
+                    </td>
+                    <td>
+                      <a class="btn btn-light"><i class="far fa-plus-square"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+<div class="card-columns">
+    @foreach (var product in Model.productos)
+    {
+        <div class="card col-sm">
+            <img src="@product.Img" class="product" />
+            <div class="card-body">
+                <h5 class="card-title"> @product.NomProducto </h5>
+            </div>
+
+            <div class="card-footer">
+                <a class="btn btn-light btnAgregar" href="~/api/Carrito/@product.IdProducto/1">Agregar al carrito <i class="far fa-plus-square"></i></a>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts { 
+    <script type="text/javascript">
+        $(function () {
+            $(".btnAgregar").on("click", function (ev) {
+                var url = $(this).attr("href");
+                ev.preventDefault();
+                $.ajax({
+                            url: url,
+                            type: "POST",
+                            success: function () {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se Agrego al carrito correctamente',
+                                    showConfirmButton: false,
+                                });
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            }
+                        });
+            });
+        });
+    </script>
+}

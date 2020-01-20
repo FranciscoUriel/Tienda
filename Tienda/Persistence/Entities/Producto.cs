@@ -19,6 +19,11 @@ namespace Tienda.Persistence.Entities
         [Display(Name = "Cantidad")]
         [Required]
         public int Cantidad { get; set; }
+
+        [Display(Name = "Direccion de la imagen")]
+        [Required]
+        public string Img { get; set; }
+
         [Display(Name = "Detalles")]
         [Required]
         public string Detalle { get; set; }
