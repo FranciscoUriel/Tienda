@@ -18,7 +18,8 @@
     </thead>
     <tbody>
         @foreach (var item in Model.proCar)
-        {
+        {if (item.Carrito.IdCar == Model.Car.Last().IdCar)
+            {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Producto.NomProducto)
@@ -31,63 +32,39 @@
                     <a  href="~/api/Carrito/@item.IdProdCar" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>
                 </td>
             </tr>
-            
+            }
         }
     </tbody>
 </table>
 <div>
     <h5>Total a pagar</h5>
     <h4>$@Model.Total(Model.Car.Last().IdCar)</h4>
-    <a class="btn btn-success">Pagar</a>
+    <a href="~/api/Sale/@Model.Car.Last().IdCar/@Model.Total(Model.Car.Last().IdCar)" class="btn btn-success btnPaga">Pagar</a>
 </div>
 
 @section Scripts{
 <script>
-    $(function () {
-        $('.btnDelete').on("click", function (ev) {
-            var url = $(this).attr("href");
-             ev.preventDefault();
-           const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false
-                })
-
-            swalWithBootstrapButtons.fire({
-                title: 'Estas seguro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Si, borraro',
-                cancelButtonText: 'No, cancela',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: url,
-                        type: "DELETE",
-                        success: function (result) {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Se a borrado el producto dek carrito exitosamente',
-                                showConfirmButton: false,
-                            });
-                            window.setTimeout(function () {
-                                location.reload();
-                            }, 3000);
-                        }
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelado',
-                        'NO se elimino nada del carrito',
-                        'error'
-                    )
-                }
+     $(function () {
+            $(".btnPaga").on("click", function (ev) {
+                var url = $(this).attr("href");
+                ev.preventDefault();
+                $.ajax({
+                            url: url,
+                            type: "POST",
+                            success: function () {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se Agrego al carrito correctamente',
+                                    showConfirmButton: false,
+                                });
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            }
+                        });
             });
         });
-    });
+
 </script>
  }
