@@ -9,6 +9,7 @@ namespace Tienda.Persistence.Entities
     public class Categoria
     {
         [Display(Name ="Categoria")]
+        [Required]
         [Key]
         public string NomCategoria { get; set; }
         [Display(Name = "Detalles")]

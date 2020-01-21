@@ -28,7 +28,7 @@
                 @Html.DisplayFor(m => item.Total)
             </td>
             <td>
-                <a class="btn btn-primary" asp-page="./Detalles" asp-route-id=""><i class="fas fa-info-circle"></i></a>
+                <a class="btn btn-primary" asp-page="./Detalles" asp-route-id="@item.IdSale"><i class="fas fa-info-circle"></i></a>
             </td>
         </tr>
         }

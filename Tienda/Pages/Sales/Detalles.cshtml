@@ -1,0 +1,42 @@
+﻿@page
+@model Tienda.Pages.Sales.DetallesModel
+@{
+}
+<h1>Detalles</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => Model.prodCar[0].Producto.NomProducto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.prodCar[0].Producto.Precio)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.prodCar)
+            {
+                if (item.Carrito.IdCar == Model.sales.carrito.IdCar)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.Producto.NomProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Producto.Precio)
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <h5>Total</h5>
+    <h4>@Model.Total()</h4>
+</div>
+<div>
+    <a asp-page="./Index">Volver <i class="fas fa-backspace"></i></a>
+</div>

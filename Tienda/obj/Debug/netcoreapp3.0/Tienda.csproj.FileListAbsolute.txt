@@ -171,3 +171,4 @@ C:\Users\i-francisco.herrera\source\repos\Tienda\Tienda\obj\Debug\netcoreapp3.0\
 C:\Users\i-francisco.herrera\source\repos\Tienda\Tienda\obj\Debug\netcoreapp3.0\Razor\Pages\Productos\Edit.cshtml.g.cs
 C:\Users\i-francisco.herrera\source\repos\Tienda\Tienda\obj\Debug\netcoreapp3.0\Razor\Pages\Sales\Index.cshtml.g.cs
 C:\Users\i-francisco.herrera\source\repos\Tienda\Tienda\obj\Debug\netcoreapp3.0\Razor\Pages\Carritos\Index.cshtml.g.cs
+C:\Users\i-francisco.herrera\source\repos\Tienda\Tienda\obj\Debug\netcoreapp3.0\Razor\Pages\Sales\Detalles.cshtml.g.cs

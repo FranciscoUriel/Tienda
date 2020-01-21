@@ -41,16 +41,14 @@ namespace Tienda.Pages.Productos
             {
                 return Page();
             }
-            if(!await CategoriaExiste(productos.Categoria.NomCategoria))
-            {
-                return Page();
-            }
+           
             _context.Attach(productos).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
-            }catch (DbUpdateConcurrencyException)
+            }
+            catch (DbUpdateConcurrencyException)
             {
                 if (!await ProductoExist(productos.IdProducto))
                 {

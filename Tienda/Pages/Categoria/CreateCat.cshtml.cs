@@ -35,6 +35,10 @@ namespace Tienda
             {
                 return Page();
             }
+            if(Categoria.NomCategoria == null)
+            {
+                return Page();
+            }
 
             _context.Categroria.Add(Categoria);
             await _context.SaveChangesAsync();

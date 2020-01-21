@@ -55,7 +55,7 @@
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'success',
-                                    title: 'Se Agrego al carrito correctamente',
+                                    title: 'Se Pago',
                                     showConfirmButton: false,
                                 });
                                 window.setTimeout(function () {
@@ -65,6 +65,53 @@
                         });
             });
         });
+      $(function () {
+            $(".btnDelete").on("click", function (ev) {
+                var Url = $(this).attr("href");
 
+                ev.preventDefault();
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Estas seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si, borraro',
+                    cancelButtonText: 'No, cancela',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: Url,
+                            type: "DELETE",
+                            success: function (result) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se a borrado del carrito correctamente',
+                                    showConfirmButton: false,
+                                });
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelado',
+                            'NO se borro el producto',
+                            'error'
+                        )
+                    }
+                });
+            });
+        });
 </script>
  }
