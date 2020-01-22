@@ -9,7 +9,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.productos[0].NomProducto)
             </th>
-        
+            <th>
+                @Html.DisplayNameFor(model => model.proCar[0].Cantidad)
+            </th>
+            <th>
+                Precio unitario
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.productos[0].Precio)
             </th>
@@ -24,12 +29,19 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Producto.NomProducto)
                 </td>
-            
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Producto.Precio)
                 </td>
                 <td>
-                    <a  href="~/api/Carrito/@item.IdProdCar" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>
+                    @(item.Producto.Precio * item.Cantidad)
+                </td>
+                <td>
+                    <a  href="~/api/Carrito/@item.IdProdCar" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>|
+                    <a href="~/api/CarritoCantidad/@item.IdProdCar/1" class="btn btn-success btnAgregar"><i class="fas fa-plus"></i></a>|
+                    <a href="~/api/CarritoCantidad/@item.IdProdCar/-1" class="btn btn-danger btnDisminuye"><i class="fas fa-minus"></i></a>
                 </td>
             </tr>
             }
@@ -111,6 +123,38 @@
                         )
                     }
                 });
+            });
+      });
+    $(function () {
+            $(".btnAgregar").on("click", function (ev) {
+                var url = $(this).attr("href");
+                ev.preventDefault();
+                $.ajax({
+                            url: url,
+                            type: "POST",
+                            success: function () {
+                               
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 0);
+                            }
+                        });
+            });
+    });
+    $(function () {
+            $(".btnDisminuye").on("click", function (ev) {
+                var url = $(this).attr("href");
+                ev.preventDefault();
+                $.ajax({
+                            url: url,
+                            type: "POST",
+                            success: function () {
+                               
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 0);
+                            }
+                        });
             });
         });
 </script>

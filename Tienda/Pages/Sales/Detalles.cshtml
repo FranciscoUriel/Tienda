@@ -11,6 +11,12 @@
                     @Html.DisplayNameFor(model => Model.prodCar[0].Producto.NomProducto)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => Model.prodCar[0].Cantidad)
+                </th>
+                <th>
+                    Precio unitario
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => Model.prodCar[0].Producto.Precio)
                 </th>
             </tr>
@@ -25,7 +31,13 @@
                     @Html.DisplayFor(m => item.Producto.NomProducto)
                 </td>
                 <td>
+                    @Html.DisplayFor(m => item.Cantidad)
+                </td>
+                <td>
                     @Html.DisplayFor(m => item.Producto.Precio)
+                </td>
+                <td>
+                    @(item.Cantidad * item.Producto.Precio)
                 </td>
             </tr>
                 }
@@ -35,7 +47,7 @@
 </div>
 <div>
     <h5>Total</h5>
-    <h4>@Model.Total()</h4>
+    <h4>@Model.sales.Total</h4>
 </div>
 <div>
     <a asp-page="./Index">Volver <i class="fas fa-backspace"></i></a>

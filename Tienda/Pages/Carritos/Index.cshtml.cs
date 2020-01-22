@@ -33,7 +33,7 @@ namespace Tienda.Pages.Carritos
             {
                 if (item.Carrito.IdCar == id)
                 {
-                    total += item.Producto.Precio;
+                    total = (item.Producto.Precio * item.Cantidad)+total;
                 }
             }
             return total;

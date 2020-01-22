@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +19,57 @@ namespace Tienda.Controllers
             _context = context;
         }
         public Prod_Car prodCar = new Prod_Car();
+        private IList<Prod_Car> existente { get; set; }
+        private IList<Carrito> car { get; set; }
+        private IList<Producto> pro { get; set; }
 
-
-
+        /// <summary>
+        /// Agrega la cantidad de producto solicitado
+        /// </summary>
+        /// <param name="idpro"></param>
+        /// <param name="idCar"></param>
+        /// <param name="cantidad"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("{idpro}/{idCar}")]
-        public async Task<IActionResult> Post(int idpro, int idCar)
+        [Route("{idpro}/{idCar}/{cantidad}")]
+        public async Task<IActionResult> Post(int idpro, int idCar,int cantidad)
         {
+
+            existente = await _context.ProdCar.ToListAsync();
             var producto = await _context.Producto.FindAsync(idpro);
             var carrito = await _context.Carritos.FindAsync(idCar);
+            car = await _context.Carritos.ToListAsync();
+            pro = await _context.Producto.ToListAsync();
             if(producto == null || carrito == null)
             {
                 return NotFound();
             }
             prodCar.Carrito = carrito;
             prodCar.Producto = producto;
+            prodCar.Cantidad = cantidad;
+            foreach (var item in existente)
+            {
+                if(item.Carrito.IdCar == idCar && item.Producto.IdProducto == idpro)
+                {
+
+                    item.Cantidad += cantidad;
+
+                    _context.ProdCar.Update(item);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+
             _context.ProdCar.Add(prodCar);
             await _context.SaveChangesAsync();
             return Ok();
         }
 
+        /// <summary>
+        /// Encarfado de borrar por compreto algun producto del carrito
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -53,5 +85,6 @@ namespace Tienda.Controllers
             
             return Ok();
         }
+      
     }
 }

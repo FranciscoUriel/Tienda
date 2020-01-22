@@ -11,7 +11,8 @@ namespace Tienda.Persistence.Entities
         [Key]
         public int IdProdCar { get; set; }
         public Producto Producto { get; set; }
-
+        [Display(Name ="Cantidad")]
+        public int Cantidad { get; set; }
         
         public Carrito Carrito { get; set; }
        

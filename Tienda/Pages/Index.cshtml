@@ -36,24 +36,30 @@
 @section Scripts { 
     <script type="text/javascript">
         $(function () {
+           
             $(".btnAgregar").on("click", function (ev) {
-                var url = $(this).attr("href");
                 ev.preventDefault();
-                $.ajax({
-                            url: url,
-                            type: "POST",
-                            success: function () {
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'success',
-                                    title: 'Se agrego al carrito',
-                                    showConfirmButton: false,
-                                });
-                                window.setTimeout(function () {
-                                    location.reload();
-                                }, 3000);
-                            }
-                        });
+                var url = $(this).attr("href");
+                const { value: cantidad } = Swal.fire({
+                    title: 'Cuantos desea agregar al carrito',
+                    input: 'number'
+
+                }).then((cantidad) =>{
+                    $.ajax({
+
+                        url: url + '/' + cantidad.value,
+                        type: "POST",
+                        success: function () {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Se agrego al carrito',
+                                showConfirmButton: false,
+                            });
+
+                        }
+                    });
+                });
             });
         });
 
