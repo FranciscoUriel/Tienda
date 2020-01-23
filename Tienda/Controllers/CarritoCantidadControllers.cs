@@ -17,16 +17,23 @@ namespace Tienda.Controllers
             _context = context;
         }
         [HttpPost]
-        [Route("{idPC}/{can}")]
-        public async Task<IActionResult> Post(int idPC, int can)
+        [Route("{idPC}/{can}/{idPro}")]
+        public async Task<IActionResult> Post(int idPC, int can,int idPro)
         {
             var prodCar = await _context.ProdCar.FindAsync(idPC);
+            var producto = await _context.Producto.FindAsync(idPro);
             if (prodCar == null)
             {
                 return NotFound();
             }
+            if (prodCar.Cantidad <= 1 && can < 0 || producto.Cantidad <=0 && can > 0)
+            {
+                return NotFound();
+            }
+            producto.Cantidad -= can;
             prodCar.Cantidad += can;
             _context.ProdCar.Update(prodCar);
+            _context.Producto.Update(producto);
             await _context.SaveChangesAsync();
             return Ok();
         }

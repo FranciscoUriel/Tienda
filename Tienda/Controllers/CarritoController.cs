@@ -44,6 +44,13 @@ namespace Tienda.Controllers
             {
                 return NotFound();
             }
+            producto.Cantidad -= cantidad;
+
+            if(producto.Cantidad < 0)
+            {
+                return NotFound();
+            }
+
             prodCar.Carrito = carrito;
             prodCar.Producto = producto;
             prodCar.Cantidad = cantidad;
@@ -55,12 +62,14 @@ namespace Tienda.Controllers
                     item.Cantidad += cantidad;
 
                     _context.ProdCar.Update(item);
+                    _context.Producto.Update(producto);
                     _context.SaveChanges();
                     return Ok();
                 }
             }
 
             _context.ProdCar.Add(prodCar);
+            _context.Producto.Update(producto);
             await _context.SaveChangesAsync();
             return Ok();
         }
@@ -71,15 +80,19 @@ namespace Tienda.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [Route("{id}/{idPro}")]
+        public async Task<IActionResult> Delete(int id, int idPro)
         {
             var prodCar = await _context.ProdCar.FindAsync(id);
-            if(prodCar == null)
+            var producto = await _context.Producto.FindAsync(idPro);
+            pro = await _context.Producto.ToListAsync();
+            if (prodCar == null)
             {
                 return NotFound();
             }
+            producto.Cantidad += prodCar.Cantidad;
              _context.Remove(prodCar);
+            _context.Producto.Update(producto);
 
             await _context.SaveChangesAsync();
             

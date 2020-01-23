@@ -7,7 +7,7 @@
 
 <div>
     <h1 class="display-4">Bienvenido a Tiendita experimental HD</h1>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:450px;max-width:450px;" />
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:450px;max-width:450px;" class="center" />
 
 </div>
 
@@ -16,7 +16,7 @@
     @foreach (var product in Model.productos)
     {
         <div class="card col-sm" id="@product.IdProducto">
-            <img src="@product.Img" class="product" />
+            <img src="@product.Img" class="product center" />
             <div class="card-body">
                 <h5 class="card-title"> @product.NomProducto </h5>
                 <div class="info hidden" id="@product.IdProducto">
@@ -44,7 +44,8 @@
                     title: 'Cuantos desea agregar al carrito',
                     input: 'number'
 
-                }).then((cantidad) =>{
+                }).then((cantidad) => {
+                    if (cantidad.value > 0) {
                     $.ajax({
 
                         url: url + '/' + cantidad.value,
@@ -57,8 +58,17 @@
                                 showConfirmButton: false,
                             });
 
+                        },
+                        error: function () {
+                              Swal.fire({
+                                position: 'center',
+                                icon: 'warning',
+                                title: 'No ay esa cantidad de producto en stock',
+                                showConfirmButton: false,
+                            });
                         }
                     });
+                    }
                 });
             });
         });

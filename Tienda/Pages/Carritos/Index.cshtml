@@ -39,9 +39,9 @@
                     @(item.Producto.Precio * item.Cantidad)
                 </td>
                 <td>
-                    <a  href="~/api/Carrito/@item.IdProdCar" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>|
-                    <a href="~/api/CarritoCantidad/@item.IdProdCar/1" class="btn btn-success btnAgregar"><i class="fas fa-plus"></i></a>|
-                    <a href="~/api/CarritoCantidad/@item.IdProdCar/-1" class="btn btn-danger btnDisminuye"><i class="fas fa-minus"></i></a>
+                    <a  href="~/api/Carrito/@item.IdProdCar/@item.Producto.IdProducto" class="btn btn-primary btnDelete"><i class="fas fa-times"></i></a>|
+                    <a href="~/api/CarritoCantidad/@item.IdProdCar/1/@item.Producto.IdProducto" class="btn btn-success btnAgregar"><i class="fas fa-plus"></i></a>|
+                    <a href="~/api/CarritoCantidad/@item.IdProdCar/-1/@item.Producto.IdProducto" class="btn btn-danger btnDisminuye"><i class="fas fa-minus"></i></a>
                 </td>
             </tr>
             }
@@ -137,7 +137,15 @@
                                 window.setTimeout(function () {
                                     location.reload();
                                 }, 0);
-                            }
+                    },
+                    error: function () {
+                        Swal.fire({
+                                    position: 'center',
+                                    icon: 'warning',
+                                    title: 'No ay tanto producto en stock',
+                                    showConfirmButton: false,
+                                });
+                    }
                         });
             });
     });
@@ -153,7 +161,15 @@
                                 window.setTimeout(function () {
                                     location.reload();
                                 }, 0);
-                            }
+                    },
+                             error: function () {
+                        Swal.fire({
+                                    position: 'center',
+                                    icon: 'warning',
+                                    title: 'No se puede disminuir mas la cantidad del carrito',
+                                    showConfirmButton: false,
+                                });
+                    }
                         });
             });
         });
