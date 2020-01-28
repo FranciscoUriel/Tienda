@@ -15,6 +15,9 @@ namespace Tienda.Persistence.Entities
         [Required]
         public ICollection<Sale> sale { get; set; }
 
+         public bool Vendido { get; set; }
+        public Usuarios Usuario { get; set; }
+
 
         public ICollection<Prod_Car> ProdCar { get; set; }
     }

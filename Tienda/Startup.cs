@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.AspNetCore.Identity;
 using Tienda.Persistence.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.Design;
+using Tienda.Persistence.Entities;
+
 
 namespace Tienda
 {
@@ -26,9 +29,22 @@ namespace Tienda
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizeFolder("/Carritos");
+                options.Conventions.AuthorizeFolder("/Categoria");
+                options.Conventions.AuthorizeFolder("/Productos");
+                options.Conventions.AuthorizeFolder("/Sales");
+
+
+            });
             services.AddDbContext<TiendaContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("TiendaContext")));
+             options.UseSqlServer(Configuration.GetConnectionString("TiendaContext")));
+
+            services.AddDefaultIdentity<Usuarios>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultUI()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<TiendaContext>();
+
 
 
         }
@@ -42,6 +58,9 @@ namespace Tienda
             }
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

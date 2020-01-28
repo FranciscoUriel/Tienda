@@ -3,6 +3,8 @@
 @{
 }
 <h1>Detalles</h1>
+@if (Model.sales.carrito.Usuario.UserName == User.Identity.Name)
+{
 <div>
     <table class="table">
         <thead>
@@ -52,3 +54,4 @@
 <div>
     <a asp-page="./Index">Volver <i class="fas fa-backspace"></i></a>
 </div>
+}

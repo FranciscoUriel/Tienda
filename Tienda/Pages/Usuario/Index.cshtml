@@ -1,0 +1,95 @@
+﻿@page
+@model Tienda.Pages.Usuario.IndexModel
+@{
+}
+
+<h1>Usuarios</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.user)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Model.RoleDelUsuario(item.Id)
+                </td>
+                @if (Model.RoleDelUsuario(item.Id) == "Administrador")
+                {
+                    <td>
+                        <form method="post">
+                            <a href="~/api/Usuarios/1/@item.Id" class="btn btn-primary btnCambio">Cliente </a>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form method="post">
+                            <a  href="~/api/Usuarios/0/@item.Id"  class="btn btn-primary btnCambio" >Admi </a>
+                        </form>
+                    </td>
+
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+
+            $(".btnCambio").on("click", function (ev) {
+                ev.preventDefault();
+                var url = $(this).attr("href");
+
+                $.ajax({
+
+                    url: url,
+                    type: "POST",
+                    success: function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Se le cambio el rol',
+                            showConfirmButton: false,
+                        });
+                         window.setTimeout(function () {
+                                    location.reload();
+                                    }, 3000); 
+
+                    }
+                });
+            });
+        });
+    </script>
+}

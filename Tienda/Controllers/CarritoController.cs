@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,20 +11,23 @@ using Tienda.Persistence.Entities;
 
 namespace Tienda.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Carrito")]
     public class CarritoController : ControllerBase
     {
         private readonly TiendaContext _context;
+        
         public CarritoController(TiendaContext context)
         {
             _context = context;
+           
         }
         public Prod_Car prodCar = new Prod_Car();
         private IList<Prod_Car> existente { get; set; }
         private IList<Carrito> car { get; set; }
         private IList<Producto> pro { get; set; }
-
+        private IList<Usuarios> user { get; set; }
         /// <summary>
         /// Agrega la cantidad de producto solicitado
         /// </summary>
@@ -35,11 +40,24 @@ namespace Tienda.Controllers
         public async Task<IActionResult> Post(int idpro, int idCar,int cantidad)
         {
 
+
+            user = await _context.Users.ToListAsync();
             existente = await _context.ProdCar.ToListAsync();
             var producto = await _context.Producto.FindAsync(idpro);
-            var carrito = await _context.Carritos.FindAsync(idCar);
+           
             car = await _context.Carritos.ToListAsync();
             pro = await _context.Producto.ToListAsync();
+            var carrito = new Carrito();
+            foreach (var item in car)
+            {
+                if (item.Vendido == false && item.IdCar == idCar)
+                {
+                     carrito = item;
+                    break;
+                }
+            }
+
+
             if(producto == null || carrito == null)
             {
                 return NotFound();
@@ -56,7 +74,7 @@ namespace Tienda.Controllers
             prodCar.Cantidad = cantidad;
             foreach (var item in existente)
             {
-                if(item.Carrito.IdCar == idCar && item.Producto.IdProducto == idpro)
+                if(item.Carrito.IdCar == carrito.IdCar && item.Producto.IdProducto == idpro)
                 {
 
                     item.Cantidad += cantidad;

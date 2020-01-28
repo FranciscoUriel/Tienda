@@ -13,6 +13,7 @@ namespace Tienda.Persistence.Entities
         [Display(Name ="Producto")]
         [Required]
         public string NomProducto { get; set; }
+        [Range(0,1000)]
         [Display(Name = "Precio")]
         [Required]
         public decimal Precio { get; set; }

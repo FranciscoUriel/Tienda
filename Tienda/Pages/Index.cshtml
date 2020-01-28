@@ -8,7 +8,7 @@
 <div>
     <h1 class="display-4">Bienvenido a Tiendita experimental HD</h1>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOAF0xTNNUpP3hLvV2CtIzHdPTo-_FALAWQ4uWAF-WzR_zeooC" style="max-height:450px;max-width:450px;" class="center" />
-
+    
 </div>
 
 
@@ -16,7 +16,7 @@
     @foreach (var product in Model.productos)
     {
         <div class="card col-sm" id="@product.IdProducto">
-            <img src="@product.Img" class="product center" />
+            <img src="@product.Img" class="product center" id="@product.IdProducto"/>
             <div class="card-body">
                 <h5 class="card-title"> @product.NomProducto </h5>
                 <div class="info hidden" id="@product.IdProducto">
@@ -25,10 +25,11 @@
                 </p>
                 </div>
             </div>
-
+            @if (User.Identity.IsAuthenticated) { 
             <div class="card-footer">
-                <a class="btn btn-light btnAgregar" href="~/api/Carrito/@product.IdProducto/@Model.Car.Last().IdCar">Agregar al carrito <i class="far fa-plus-square"></i></a>
+                <a class="btn btn-light btnAgregar" href="~/api/Carrito/@product.IdProducto/@Model.idCarrito(User.Identity.Name)">Agregar al carrito <i class="far fa-plus-square"></i></a>
             </div>
+            }
         </div>
     }
 </div>
@@ -42,7 +43,12 @@
                 var url = $(this).attr("href");
                 const { value: cantidad } = Swal.fire({
                     title: 'Cuantos desea agregar al carrito',
-                    input: 'number'
+                    input: 'number',
+                    inputAttributes: {
+                        min: 1,
+                        max: 200,
+                        step: 1
+                    }
 
                 }).then((cantidad) => {
                     if (cantidad.value > 0) {
@@ -82,6 +88,18 @@
             $(".card").mouseout(function (ev) {
                   var id = $(this).attr("id");
                 $('#'+id+'.info').addClass('hidden');
+            });
+             $(".card").on("click",function (ev) {
+                 var id = $(this).attr("id");
+                 var img = $("img " + "." + id).attr("src");
+                Swal.fire({
+  title: 'Sweet!',
+  text: 'Modal with a custom image.',
+  imageUrl: img,
+  imageWidth: 400,
+  imageHeight: 200,
+  imageAlt: 'Custom image',
+})
             });
         });
     </script>

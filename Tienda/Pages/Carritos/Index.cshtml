@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model.proCar)
-        {if (item.Carrito.IdCar == Model.Car.Last().IdCar)
+        {if (item.Carrito.Usuario.UserName == User.Identity.Name && item.Carrito.Vendido == false)
             {
             <tr>
                 <td>
@@ -50,8 +50,8 @@
 </table>
 <div>
     <h5>Total a pagar</h5>
-    <h4>$@Model.Total(Model.Car.Last().IdCar)</h4>
-    <a href="~/api/Sale/@Model.Car.Last().IdCar/@Model.Total(Model.Car.Last().IdCar)" class="btn btn-success btnPaga">Pagar</a>
+    <h4>$@Model.Total(Model.carritoActual().IdCar)</h4>
+    <a href="~/api/Sale/@Model.carritoActual().IdCar/@Model.Total(Model.carritoActual().IdCar)" class="btn btn-success btnPaga">Pagar</a>
 </div>
 
 @section Scripts{
@@ -92,7 +92,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                    title: 'Estas seguro?',
+                    title: 'Estas seguro de borrar este producto del carrito?',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Si, borraro',

@@ -20,6 +20,8 @@
     <tbody>
         @foreach (var item in Model.sales)
         {
+            if (item.carrito.Usuario.UserName == User.Identity.Name)
+            {
         <tr>
             <td>
                 @Html.DisplayFor(m => item.Fecha)
@@ -31,6 +33,7 @@
                 <a class="btn btn-primary" asp-page="./Detalles" asp-route-id="@item.IdSale"><i class="fas fa-info-circle"></i></a>
             </td>
         </tr>
+            }
         }
     </tbody>
 </table>

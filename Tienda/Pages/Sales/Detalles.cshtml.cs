@@ -21,6 +21,7 @@ namespace Tienda.Pages.Sales
 
         public Sale sales { get; set; }
         private IList<Carrito> car { get; set; }
+        private IList<Usuarios> user { get; set; }
         public IList<Prod_Car> prodCar { get; set; }
         private IList<Producto> prod { get; set; }
         
@@ -30,7 +31,7 @@ namespace Tienda.Pages.Sales
             {
                 return NotFound();
             }
-
+            user = await _context.Users.ToListAsync();
             sales = await _context.Sale.FirstOrDefaultAsync(m => m.IdSale == id);
             car = await _context.Carritos.ToListAsync();
             prodCar = await _context.ProdCar.ToListAsync();

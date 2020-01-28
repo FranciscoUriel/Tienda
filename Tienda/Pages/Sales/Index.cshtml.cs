@@ -19,9 +19,13 @@ namespace Tienda.Pages.Sales
             _context = context;
         }
         public IList<Sale> sales { get; set; }
+        private IList<Usuarios> user { get; set; }
+        private IList<Carrito> car { get; set; }
         public async Task OnGetAsync()
         {
             sales = await _context.Sale.ToListAsync();
+            user = await _context.Users.ToListAsync();
+            car = await _context.Carritos.ToListAsync();
         }
     }
 }
